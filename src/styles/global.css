@@ -240,7 +240,10 @@ footer {
 .cat-mind { background: linear-gradient(135deg, #1d3557, #457b9d); }
 .cat-human { background: linear-gradient(135deg, #7f5539, #c38e70); }
 
-.category-banner .cat-icon { font-size: 2rem; display: block; margin-bottom: 0.4rem; }
+.category-banner .cat-icon { display: block; margin-bottom: 0.4rem; line-height: 1; }
+.category-banner .cat-icon svg { width: 2rem; height: 2rem; }
+
+.section-title svg { width: 1.5rem; height: 1.5rem; flex-shrink: 0; }
 
 /* ===== 記事ページ ===== */
 .article-header {
