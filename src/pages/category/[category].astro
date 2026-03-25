@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+  const categories = [...new Set(articles.map(a => a.data.category))];
+  return categories.map(category => ({
+    params: { category },
+    props: {
+      articles: articles
+        .filter(a => a.data.category === category)
+        .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()),
+    },
+  }));
+}
+
+const { category } = Astro.params;
+const { articles } = Astro.props;
+
+const icons: Record<string, string> = {
+  "仕事術": "💼",
+  "ビジネスマインド": "🧠",
+  "人間力": "🌱",
+};
+---
+
+<BaseLayout title={category}>
+  <div class="container">
+    <section class="section">
+      <h1 class="section-title" style="font-size:1.8rem">
+        {icons[category] ?? ""} {category}
+      </h1>
+      <p style="color:var(--color-text-muted);margin-bottom:2rem">{articles.length}件の記事</p>
+
+      <div class="cards">
+        {articles.map(article => (
+          <a href={`/articles/${article.id}`} class="card">
+            <span class="card-category">{article.data.category}</span>
+            <h3 class="card-title">{article.data.title}</h3>
+            <p class="card-desc">{article.data.description}</p>
+            <p class="card-date">{article.data.publishedAt}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

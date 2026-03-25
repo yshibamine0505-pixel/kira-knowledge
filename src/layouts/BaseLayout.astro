@@ -1,0 +1,40 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "Kira's Knowledge", description = "仕事術・ビジネスマインド・人間力を高めるナレッジサイト" } = Astro.props;
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title} | Kira's Knowledge</title>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a href="/" class="site-logo">Kira's <span>Knowledge</span></a>
+        <nav>
+          <a href="/category/仕事術">仕事術</a>
+          <a href="/category/ビジネスマインド">ビジネスマインド</a>
+          <a href="/category/人間力">人間力</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <p>© 2026 Kira's Knowledge — 自分を磨く人のためのナレッジベース</p>
+    </footer>
+  </body>
+</html>

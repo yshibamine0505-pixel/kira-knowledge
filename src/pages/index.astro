@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const allArticles = await getCollection("articles");
+const latest = allArticles
+  .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime())
+  .slice(0, 6);
+
+const categories = [
+  { name: "仕事術", icon: "💼", class: "cat-work", desc: "段取り・効率・時間管理" },
+  { name: "ビジネスマインド", icon: "🧠", class: "cat-mind", desc: "思考法・意思決定・戦略" },
+  { name: "人間力", icon: "🌱", class: "cat-human", desc: "コミュニケーション・自己成長" },
+];
+---
+
+<BaseLayout title="ホーム">
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1 class="hero-title">自分を磨く人のための<br />ナレッジベース</h1>
+        <p class="hero-sub">仕事術・ビジネスマインド・人間力——<br />日々の行動を変えるヒントを届ける</p>
+      </div>
+      <div class="hero-kira">
+        <img src="/kira.png" alt="Kira" />
+        <p class="kira-caption">ライター「Kira」</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="section">
+      <div class="category-banners">
+        {categories.map(cat => (
+          <a href={`/category/${cat.name}`} class={`category-banner ${cat.class}`}>
+            <span class="cat-icon">{cat.icon}</span>
+            {cat.name}
+            <div style="font-size:0.8rem;font-weight:400;opacity:0.85;margin-top:0.25rem">{cat.desc}</div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">最新の記事</h2>
+      <div class="cards">
+        {latest.map(article => (
+          <a href={`/articles/${article.id}`} class="card">
+            <span class="card-category">{article.data.category}</span>
+            <h3 class="card-title">{article.data.title}</h3>
+            <p class="card-desc">{article.data.description}</p>
+            <p class="card-date">{article.data.publishedAt}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
