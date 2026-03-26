@@ -7,7 +7,7 @@ const articles = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    category: z.enum(["仕事術", "ビジネスマインド", "人間力"]),
+    category: z.enum(["仕事術", "ビジネスマインド", "人間力", "思考法"]),
     publishedAt: z.string(),
     tags: z.array(z.string()).optional(),
   }),
